@@ -1,10 +1,14 @@
 .navbar-toggler {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--bs-deep-black);
 }
 
 .top-row {
-    height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+    height: 1rem; /* Altura média */
+    display: flex; /* Alinha os itens horizontalmente */
+    align-items: center; /* Centraliza verticalmente os itens */
+    justify-content: center; /* Centraliza horizontalmente os itens */
+    background-color: #000; /* Cor de fundo preta */
+    padding: 0 15px; /* Espaçamento interno */
 }
 
 .navbar-brand {
@@ -40,15 +44,15 @@
         line-height: 3rem;
     }
 
-.nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.25);
-    color: white;
-}
+        .nav-item ::deep a.active {
+            background-color: var(--bs-dark-burgundy);
+            color: white;
+        }
 
-.nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-}
+        .nav-item ::deep a:hover {
+            background-color: var(--bs-dark-burgundy);
+            color: white;
+        }
 
 @media (min-width: 641px) {
     .navbar-toggler {

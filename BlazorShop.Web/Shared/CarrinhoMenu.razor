@@ -1,9 +1,9 @@
 ﻿@implements IDisposable
 @inject ICarrinhoCompraService carrinhoCompraService
 
-<a href="CarrinhoCompra" class="btn btn-info">
+<a href="CarrinhoCompra" class="carrinho-custom-btn">
     <i class="oi oi-cart"></i>&nbsp;Carrinho
-    <span class="badge bg-dark">@carrinhoCompraItemContador</span>
+    <span class="badge bg-light">@carrinhoCompraItemContador</span>
 </a>
 
 @code {
@@ -22,6 +22,9 @@
     }
     void IDisposable.Dispose()
     {
-        carrinhoCompraService.OnCarrinhoCompraChanged -= CarrinhoCompraChanged;
+        if (carrinhoCompraService != null)
+        {
+            carrinhoCompraService.OnCarrinhoCompraChanged -= CarrinhoCompraChanged;
+        }
     }
 }

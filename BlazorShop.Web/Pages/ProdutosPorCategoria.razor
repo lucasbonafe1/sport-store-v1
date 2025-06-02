@@ -59,6 +59,7 @@ else
             MensagemErro = ex.Message;
         }
     }
+
     private async Task<IEnumerable<ProdutoDto>> GetColecaoProdutosPorCategoriaId(int categoriaId)
     {
         var produtoCollection = await GerenciaProdutosLocalStorageService.GetCollection();
@@ -72,6 +73,4 @@ else
             return await ProdutoService.GetItensPorCategoria(categoriaId);
         }
     }
-
-
 }

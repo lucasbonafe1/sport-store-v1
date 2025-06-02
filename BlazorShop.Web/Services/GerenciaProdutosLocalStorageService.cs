@@ -19,8 +19,9 @@ public class GerenciaProdutosLocalStorageService : IGerenciaProdutosLocalStorage
 
     public async Task<IEnumerable<ProdutoDto>> GetCollection()
     {
-        return await this.localStorageService.GetItemAsync<IEnumerable<ProdutoDto>>(key) 
-                         ?? await AddCollection();
+        var adicionaProdutosAoLocalStorage = await AddCollection();
+
+        return await this.localStorageService.GetItemAsync<IEnumerable<ProdutoDto>>(key);
     }
 
     public async Task RemoveCollection()
@@ -28,7 +29,7 @@ public class GerenciaProdutosLocalStorageService : IGerenciaProdutosLocalStorage
         await this.localStorageService.RemoveItemAsync(key);
     }
 
-    private async Task<IEnumerable<ProdutoDto>> AddCollection()
+    protected async Task<IEnumerable<ProdutoDto>> AddCollection()
     {
         var produtoCollection = await this.produtoService.GetItens();
         if (produtoCollection != null)
