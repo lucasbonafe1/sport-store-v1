@@ -1,16 +1,3 @@
-.navbar-toggler {
-    background-color: var(--bs-deep-black);
-}
-
-.top-row {
-    height: 1rem; /* Altura média */
-    display: flex; /* Alinha os itens horizontalmente */
-    align-items: center; /* Centraliza verticalmente os itens */
-    justify-content: center; /* Centraliza horizontalmente os itens */
-    background-color: #000; /* Cor de fundo preta */
-    padding: 0 15px; /* Espaçamento interno */
-}
-
 .navbar-brand {
     font-size: 1.1rem;
 }
