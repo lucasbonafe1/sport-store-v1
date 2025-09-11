@@ -24,19 +24,15 @@ builder.Services.AddScoped<ICarrinhoCompraRepository, CarrinhoCompraRepository>(
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
-app.UseCors(policy =>
-    policy.WithOrigins("http://localhost:7023", "https://localhost:7023")
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .WithHeaders(HeaderNames.ContentType)
-);
+//app.UseCors(policy =>
+//    policy.WithOrigins("http://localhost:7023", "https://localhost:7023", "http://localhost:32769")
+//    .AllowAnyMethod()
+//    .AllowAnyHeader()
+//    .WithHeaders(HeaderNames.ContentType)
+//);
 
 app.UseHttpsRedirection();
 
