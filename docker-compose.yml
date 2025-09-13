@@ -1,0 +1,29 @@
+services:
+  blazorshop.api:
+    build:
+      context: .
+      dockerfile: BlazorShop.API/Dockerfile
+    ports:
+      - "32769:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - blazorshop-network
+
+  blazorshop.web:
+    build:
+      context: .
+      dockerfile: BlazorShop.Web/Dockerfile
+    ports:
+      - "5000:80"
+      - "5001:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - blazorshop.api
+    networks:
+      - blazorshop-network
+
+networks:
+  blazorshop-network:
+    driver: bridge

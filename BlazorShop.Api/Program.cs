@@ -27,12 +27,11 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-//app.UseCors(policy =>
-//    policy.WithOrigins("http://localhost:7023", "https://localhost:7023", "http://localhost:32769")
-//    .AllowAnyMethod()
-//    .AllowAnyHeader()
-//    .WithHeaders(HeaderNames.ContentType)
-//);
+app.UseCors(policy =>
+    policy.AllowAnyMethod()
+    .AllowAnyHeader()
+    .WithHeaders(HeaderNames.ContentType)
+);
 
 app.UseHttpsRedirection();
 
