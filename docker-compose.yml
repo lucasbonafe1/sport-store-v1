@@ -4,9 +4,12 @@ services:
       context: .
       dockerfile: BlazorShop.API/Dockerfile
     ports:
-      - "32769:80"
+      - "7150:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=blazorshop.db;Database=virtualStoreMacoratti;Username=postgres;Password=1234;
+    depends_on:
+      - blazorshop.db
     networks:
       - blazorshop-network
 
@@ -16,14 +19,32 @@ services:
       dockerfile: BlazorShop.Web/Dockerfile
     ports:
       - "5000:80"
-      - "5001:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
       - blazorshop.api
     networks:
       - blazorshop-network
+      
+  blazorshop.db:
+    image: postgres:16
+    container_name: blazorshop-pgsql
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: virtualStoreMacoratti
+    ports:
+      - "5432:5432"
+    volumes:
+      - blazorshop-pgdata:/var/lib/postgresql/data
+    networks:
+      - blazorshop-network
 
 networks:
   blazorshop-network:
     driver: bridge
+
+volumes:
+  blazorshop-pgdata:
+    driver: local

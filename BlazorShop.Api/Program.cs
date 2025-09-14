@@ -1,14 +1,12 @@
 using BlazorShop.Api.Context;
+using BlazorShop.Api.Extensions;
 using BlazorShop.Api.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -24,13 +22,17 @@ builder.Services.AddScoped<ICarrinhoCompraRepository, CarrinhoCompraRepository>(
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.ApplyMigrations();
+}
 
 app.UseCors(policy =>
-    policy.AllowAnyMethod()
+    policy.AllowAnyOrigin() 
+    .AllowAnyMethod()
     .AllowAnyHeader()
-    .WithHeaders(HeaderNames.ContentType)
 );
 
 app.UseHttpsRedirection();

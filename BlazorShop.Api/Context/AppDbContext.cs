@@ -17,8 +17,7 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Produtos - Esportes
-        // Categoria: Equipamentos Esportivos
+        // produtos
         modelBuilder.Entity<Produto>().HasData(new Produto
         {
             Id = 1,
@@ -70,7 +69,7 @@ public class AppDbContext : DbContext
             CategoriaId = 1
         });
 
-        // Categoria: Eletrônicos Esportivos
+        // categoria
         modelBuilder.Entity<Produto>().HasData(new Produto
         {
             Id = 6,

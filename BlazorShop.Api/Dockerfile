@@ -10,6 +10,7 @@ WORKDIR /src
 COPY ["BlazorShop.Api/BlazorShop.Api.csproj", "BlazorShop.Api/"]
 COPY ["BlazorShop.Models/BlazorShop.Models.csproj", "BlazorShop.Models/"]
 RUN dotnet restore "BlazorShop.Api/BlazorShop.Api.csproj"
+
 COPY . .
 WORKDIR "/src/BlazorShop.Api"
 RUN dotnet build "BlazorShop.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
