@@ -8,7 +8,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5150"
+      "applicationUrl": "http://localhost:7150"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -21,11 +21,11 @@
     "Container (Dockerfile)": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:32769/swagger",
+      "launchUrl": "http://localhost:7150/swagger",
       "environmentVariables": {
         "ASPNETCORE_HTTP_PORTS": "8080"
       },
-      "httpPort": 32769,
+      "httpPort": 7150,
       "publishAllPorts": true,
       "useSSL": true
     }
