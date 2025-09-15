@@ -11,11 +11,15 @@
 <div class="top-row ps-3 navba-dark bg-black" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
+        <div class="nav-item">
+            <a class="nav-link navbar-brand" href="" >
+                <i class="bi bi-trophy-fill"></i>
+                &nbsp;Sport Store
+            </a>
         </div>
+
+        <hr class="divider" />
+
         <ProdutosCategoriaNavMenu />
 
         <div class="nav-item px-3 d-sm-none">
