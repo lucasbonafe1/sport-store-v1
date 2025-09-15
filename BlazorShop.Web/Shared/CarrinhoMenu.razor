@@ -1,10 +1,15 @@
 ﻿@implements IDisposable
 @inject ICarrinhoCompraService carrinhoCompraService
 
-<a href="CarrinhoCompra" class="carrinho-custom-btn">
-    <i class="oi oi-cart"></i>&nbsp;Carrinho
-    <span class="badge bg-light">@carrinhoCompraItemContador</span>
-</a>
+<button href="CarrinhoCompra" class="carrinho-custom-btn">
+    <i class="oi oi-cart"></i>
+    <span class="carrinho-text">Carrinho</span>
+
+    @if (carrinhoCompraItemContador > 0)
+    {
+        <span class="carrinho-badge">@carrinhoCompraItemContador</span>
+    }
+</button>
 
 @code {
 
