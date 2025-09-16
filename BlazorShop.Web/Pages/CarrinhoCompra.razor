@@ -12,11 +12,11 @@ else if (MensagemErro != null)
 else
 {
     <h3 class="mb-5">Carrinho</h3>
-    @if (CarrinhoCompraItens.Count() > 0)
+    @if (CarrinhoCompraItens!.Count() > 0)
     {
         <div class="row mb-5">
             <div class="col-md-9">
-                @foreach (var item in CarrinhoCompraItens)
+                @foreach (var item in CarrinhoCompraItens!)
                 {
                     <div class="row mb-3">
                         <div class="col-md-3">
@@ -80,7 +80,7 @@ else
     {
         try
         {
-            CarrinhoCompraItens = await GerenciaCarrinhoItensLocalStorageService.GetCollection();
+            CarrinhoCompraItens = await GerenciaCarrinhoItensLocalStorageService!.GetCollection();
 
             //CalculaResumoCarrinhoTotal();
             CarrinhoChanged();
@@ -94,7 +94,7 @@ else
     protected async Task DeletaCarrinhoItem_Click(int id)
     {
         //excluir o item do banco de dados
-        var carrinhoItemDto = await CarrinhoCompraService.DeletaItem(id);
+        var carrinhoItemDto = await CarrinhoCompraService!.DeletaItem(id);
 
         //remoção do item da coleção de objetos da memoria no cliente
         await RemoveCarrinhoItem(id);
@@ -105,15 +105,15 @@ else
 
     private CarrinhoItemDto GetCarrinhoItem(int id)
     {
-        return CarrinhoCompraItens.FirstOrDefault(i => i.Id == id);
+        return CarrinhoCompraItens!.First(i => i.Id == id);
     }
 
     private async Task RemoveCarrinhoItem(int id)
     {
         var carrinhoItemDto = GetCarrinhoItem(id);
-        CarrinhoCompraItens.Remove(carrinhoItemDto);
+        CarrinhoCompraItens!.Remove(carrinhoItemDto);
 
-        await GerenciaCarrinhoItensLocalStorageService.SaveCollection(CarrinhoCompraItens);
+        await GerenciaCarrinhoItensLocalStorageService!.SaveCollection(CarrinhoCompraItens);
     }
 
     protected async Task AtualizaQuantidadeCarrinhoItem_Click(int id, int quantidade)
@@ -128,17 +128,17 @@ else
                     Quantidade = quantidade
                 };
 
-                var retornaItemAtualizadoDto = await CarrinhoCompraService
+                var retornaItemAtualizadoDto = await CarrinhoCompraService!
                                                      .AtualizaQuantidade(atualizaItemDto);
 
-                AtualizaPrecoTotalItem(retornaItemAtualizadoDto);
-                //CalculaResumoCarrinhoTotal();
+                await AtualizaPrecoTotalItem(retornaItemAtualizadoDto);
+
                 CarrinhoChanged();
                 await Js.InvokeVoidAsync("TornaBotaoAtualizarQuantidadeVisivel", id, false);
             }
             else
             {
-                var item = CarrinhoCompraItens.FirstOrDefault(i => i.Id == id);
+                var item = CarrinhoCompraItens!.FirstOrDefault(i => i.Id == id);
                 if (item is not null)
                 {
                     item.Quantidade = 1;
@@ -153,11 +153,11 @@ else
     }
     private void SetPrecoTotal()
     {
-        PrecoTotal = CarrinhoCompraItens.Sum(p => p.PrecoTotal).ToString("C");
+        PrecoTotal = CarrinhoCompraItens!.Sum(p => p.PrecoTotal).ToString("C");
     }
     private void SetQuantidadeTotal()
     {
-        QuantidadeTotal = CarrinhoCompraItens.Sum(p => p.Quantidade);
+        QuantidadeTotal = CarrinhoCompraItens!.Sum(p => p.Quantidade);
     }
 
     private void CalculaResumoCarrinhoTotal()
@@ -175,7 +175,7 @@ else
             item.PrecoTotal = carrinhoItemDto.Preco * carrinhoItemDto.Quantidade;
         }
 
-        await GerenciaCarrinhoItensLocalStorageService.SaveCollection(CarrinhoCompraItens);
+        await GerenciaCarrinhoItensLocalStorageService!.SaveCollection(CarrinhoCompraItens!);
     }
 
     protected async Task AtualizaQuantidade_Input(int id)
@@ -186,6 +186,6 @@ else
     private void CarrinhoChanged()
     {
         CalculaResumoCarrinhoTotal();
-        CarrinhoCompraService.RaiseEventOnCarrinhoCompraChanged(QuantidadeTotal);
+        CarrinhoCompraService!.RaiseEventOnCarrinhoCompraChanged(QuantidadeTotal);
     }
 }
