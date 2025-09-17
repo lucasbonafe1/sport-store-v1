@@ -5,6 +5,12 @@
     }
     else
     {
+        <div class="nav-item">
+            <NavLink class="nav-link" href="/produtos" Match="NavLinkMatch.All">
+                Tudo
+            </NavLink>
+        </div>
+
         if (CategoriasDto != null)
         {
             @foreach (var categoria in CategoriasDto)

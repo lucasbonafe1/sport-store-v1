@@ -1,7 +1,7 @@
 ﻿@implements IDisposable
 @inject ICarrinhoCompraService carrinhoCompraService
 
-<button href="CarrinhoCompra" class="carrinho-custom-btn">
+<button href="CarrinhoCompra" class="carrinho-custom-btn" @onclick="IrParaCarrinho">
     <i class="oi oi-cart"></i>
     <span class="carrinho-text">Carrinho</span>
 
@@ -15,6 +15,13 @@
 
     private int carrinhoCompraItemContador = 0;
 
+    [Inject] NavigationManager NavigationManager { get; set; } = null!;
+
+    private void IrParaCarrinho()
+    {
+        NavigationManager.NavigateTo("/CarrinhoCompra");
+    }
+
     protected override void OnInitialized()
     {
         carrinhoCompraService.OnCarrinhoCompraChanged += CarrinhoCompraChanged;
@@ -25,6 +32,7 @@
         carrinhoCompraItemContador = totalQuantidade;
         StateHasChanged();
     }
+
     void IDisposable.Dispose()
     {
         if (carrinhoCompraService != null)

@@ -1,38 +1,52 @@
 ﻿@page "/ProdutosPorCategoria/{CategoriaId:int}"
 
-@if (ProdutosDto == null && MensagemErro == null)
-{
-    <ExibirSpinner/>
-}
-else if (MensagemErro != null)
-{
-    <ExibirErro ErrorMessage="@MensagemErro" />
-}
-else
-{
-    <h3>Produtos (@NomeCategoria)</h3>
-
-    @if (ProdutosDto.Count() > 0)
+<div class="container my-5">
+    @if (ProdutosDto == null && MensagemErro == null)
     {
-        <div class="row mt-3">
-            <ExibirProdutos Produtos="@ProdutosDto"></ExibirProdutos>
+        <div class="d-flex justify-content-center align-items-center" style="height:60vh;">
+            <ExibirSpinner />
         </div>
     }
-    
-}
+    else if (MensagemErro != null)
+    {
+        <div class="alert alert-danger text-center shadow-sm rounded-3">
+            <ExibirErro ErrorMessage="@MensagemErro" />
+        </div>
+    }
+    else
+    {
+        <div class="text-start mb-4">
+            <h2 class="fw-bold text-black">@NomeCategoria</h2>
+            <p class="text-muted">Confira os produtos disponíveis nesta categoria</p>
+        </div>
+
+        @if (ProdutosDto!.Any())
+        {
+            <div class="row g-4">
+                <ExibirProdutos Produtos="@ProdutosDto"></ExibirProdutos>
+            </div>
+        }
+        else
+        {
+            <div class="text-center mt-5">
+                <i class="bi bi-box-seam text-secondary" style="font-size:3rem;"></i>
+                <p class="mt-3 text-muted">Nenhum produto encontrado nesta categoria.</p>
+            </div>
+        }
+    }
+</div>
 
 @code {
     [Parameter]
     public int CategoriaId { get; set; }
 
     [Inject]
-    public IProdutoService? ProdutoService { get; set; }
+    public IProdutoService ProdutoService { get; set; } = null!;
 
     public IEnumerable<ProdutoDto>? ProdutosDto { get; set; }
 
     [Inject]
-    public IGerenciaProdutosLocalStorageService?
-                GerenciaProdutosLocalStorageService { get; set; }
+    public IGerenciaProdutosLocalStorageService GerenciaProdutosLocalStorageService { get; set; } = null!;
 
     public string? NomeCategoria { get; set; }
     public string? MensagemErro { get; set; }
@@ -41,18 +55,12 @@ else
     {
         try
         {
-            //ProdutosDto = await ProdutoService.GetItensPorCategoria(CategoriaId);
             ProdutosDto = await GetColecaoProdutosPorCategoriaId(CategoriaId);
 
-            if (ProdutosDto != null && ProdutosDto.Count() > 0)
+            if (ProdutosDto?.Any() == true)
             {
-                var produtoDto = ProdutosDto.FirstOrDefault(p => p.CategoriaId == CategoriaId);
-                if (produtoDto != null)
-                {
-                    NomeCategoria = produtoDto.CategoriaNome;
-                }
+                NomeCategoria = ProdutosDto.First().CategoriaNome;
             }
-
         }
         catch (Exception ex)
         {
@@ -65,12 +73,8 @@ else
         var produtoCollection = await GerenciaProdutosLocalStorageService.GetCollection();
 
         if (produtoCollection != null)
-        {
             return produtoCollection.Where(p => p.CategoriaId == categoriaId);
-        }
-        else
-        {
-            return await ProdutoService.GetItensPorCategoria(categoriaId);
-        }
+
+        return await ProdutoService.GetItensPorCategoria(categoriaId);
     }
 }
