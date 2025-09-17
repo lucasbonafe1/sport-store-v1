@@ -16,7 +16,6 @@ WORKDIR "/src/BlazorShop.Api"
 RUN dotnet build "BlazorShop.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "BlazorShop.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final

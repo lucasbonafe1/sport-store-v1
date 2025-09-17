@@ -1,4 +1,17 @@
 services:
+  blazorshop.web:
+    build:
+      context: .
+      dockerfile: BlazorShop.Web/Dockerfile
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - blazorshop.api
+    networks:
+      - public-network
+
   blazorshop.api:
     build:
       context: .
@@ -11,20 +24,8 @@ services:
     depends_on:
       - blazorshop.db
     networks:
-      - blazorshop-network
-
-  blazorshop.web:
-    build:
-      context: .
-      dockerfile: BlazorShop.Web/Dockerfile
-    ports:
-      - "5000:80"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    depends_on:
-      - blazorshop.api
-    networks:
-      - blazorshop-network
+      - public-network
+      - private-network
       
   blazorshop.db:
     image: postgres:16
@@ -39,10 +40,12 @@ services:
     volumes:
       - blazorshop-pgdata:/var/lib/postgresql/data
     networks:
-      - blazorshop-network
+      - private-network
 
 networks:
-  blazorshop-network:
+  public-network:
+    driver: bridge
+  private-network:
     driver: bridge
 
 volumes:
