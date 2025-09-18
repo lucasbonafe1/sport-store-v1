@@ -21,7 +21,7 @@ docker compose up -d
 docker ps
 ```
 
-4. Acessos
+## Acessos
 
 API Swagger → http://localhost:7150/swagger/index.html
 
